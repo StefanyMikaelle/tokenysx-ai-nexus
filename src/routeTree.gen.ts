@@ -9,8 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as MarketplaceRouteImport } from './routes/marketplace'
+import { Route as GovernanceRouteImport } from './routes/governance'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CreateRouteImport } from './routes/create'
+import { Route as ComputeRouteImport } from './routes/compute'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernanceRoute = GovernanceRouteImport.update({
+  id: '/governance',
+  path: '/governance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComputeRoute = ComputeRouteImport.update({
+  id: '/compute',
+  path: '/compute',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +61,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/compute': typeof ComputeRoute
+  '/create': typeof CreateRoute
+  '/dashboard': typeof DashboardRoute
+  '/docs': typeof DocsRoute
+  '/governance': typeof GovernanceRoute
+  '/marketplace': typeof MarketplaceRoute
+  '/pricing': typeof PricingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/compute': typeof ComputeRoute
+  '/create': typeof CreateRoute
+  '/dashboard': typeof DashboardRoute
+  '/docs': typeof DocsRoute
+  '/governance': typeof GovernanceRoute
+  '/marketplace': typeof MarketplaceRoute
+  '/pricing': typeof PricingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/compute': typeof ComputeRoute
+  '/create': typeof CreateRoute
+  '/dashboard': typeof DashboardRoute
+  '/docs': typeof DocsRoute
+  '/governance': typeof GovernanceRoute
+  '/marketplace': typeof MarketplaceRoute
+  '/pricing': typeof PricingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/compute'
+    | '/create'
+    | '/dashboard'
+    | '/docs'
+    | '/governance'
+    | '/marketplace'
+    | '/pricing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/compute'
+    | '/create'
+    | '/dashboard'
+    | '/docs'
+    | '/governance'
+    | '/marketplace'
+    | '/pricing'
+  id:
+    | '__root__'
+    | '/'
+    | '/compute'
+    | '/create'
+    | '/dashboard'
+    | '/docs'
+    | '/governance'
+    | '/marketplace'
+    | '/pricing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ComputeRoute: typeof ComputeRoute
+  CreateRoute: typeof CreateRoute
+  DashboardRoute: typeof DashboardRoute
+  DocsRoute: typeof DocsRoute
+  GovernanceRoute: typeof GovernanceRoute
+  MarketplaceRoute: typeof MarketplaceRoute
+  PricingRoute: typeof PricingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace': {
+      id: '/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof MarketplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/governance': {
+      id: '/governance'
+      path: '/governance'
+      fullPath: '/governance'
+      preLoaderRoute: typeof GovernanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compute': {
+      id: '/compute'
+      path: '/compute'
+      fullPath: '/compute'
+      preLoaderRoute: typeof ComputeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,7 +197,24 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ComputeRoute: ComputeRoute,
+  CreateRoute: CreateRoute,
+  DashboardRoute: DashboardRoute,
+  DocsRoute: DocsRoute,
+  GovernanceRoute: GovernanceRoute,
+  MarketplaceRoute: MarketplaceRoute,
+  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
